@@ -1,0 +1,58 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars_prompt:
+    - name: input_cluster
+      prompt: Please enter cluster hostname/IP
+      private: false
+    - name: input_username
+      prompt: Please enter username
+    - name: input_password
+      prompt: Please enter password
+
+  tasks:
+    - name: Set credentials details
+      ansible.builtin.set_fact:
+        auth: &auth
+          username:         "{{ input_username }}"
+          hostname:         "{{ input_cluster }}"
+          password:         "{{ input_password }}"
+          validate_certs:   false
+          use_rest:         Auto
+      no_log: true
+
+    - name: Cluster debug
+      netapp.ontap.na_ontap_debug:
+        <<: *auth
+      register: ontap_debug
+      ignore_errors: true
+
+    - name: Cluster connect check
+      netapp.ontap.na_ontap_rest_info:
+        <<: *auth
+        use_python_keys:  true
+        parameters:
+          fields: '*'
+        gather_subset:
+          - cluster
+          - aggregate_info
+          - cluster_node_info
+          - cluster/metrocluster/svms
+          - vserver_info
+      register: ontap_info
+    
+    - copy:
+        content: "{{ ontap_debug | to_nice_yaml }}"
+        dest: "{{ input_cluster }}_debug.yml"
+      delegate_to: localhost
+
+    - copy:
+        content: "{{ ontap_info.ontap_info | to_nice_yaml }}"
+        dest: "{{ input_cluster }}_info.yml"
+      delegate_to: localhost
+
+    - copy:
+        content: "{{ vars.var1 | to_nice_yaml }}"
+        dest: "{{ input_cluster }}_extravars.yml"
+      delegate_to: localhost
+      when: var1 is defined
