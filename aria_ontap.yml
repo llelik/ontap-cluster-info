@@ -1,0 +1,44 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  tasks:
+    - name: Set credentials details
+      ansible.builtin.set_fact:
+        auth: &auth
+          hostname:         "{{ input_cluster }}"
+          username:         "{{ input_username }}"
+          password:         "{{ input_password }}"
+          validate_certs:   false
+          use_rest:         Always
+      no_log: true
+
+    - name: Cluster collect volumes
+      netapp.ontap.na_ontap_rest_info:
+        <<: *auth
+        use_python_keys:  true
+        parameters:
+          fields: '*'
+        gather_subset:
+          - volume_info
+          - qtree_info
+      register: ontap_info
+      ignore_errors: true
+
+    - debug:
+        msg: "login: {{ input_username }}"
+    
+    - copy:
+        content: "{{ ontap_info | to_nice_yaml }}"
+        dest: "{{ input_cluster }}_vols_qtrees.yml"
+      delegate_to: localhost
+      when: ontap_info is defined
+
+    - copy:
+        content: "procedure_name: {{ vars.procedure_name }}\n
+                  environment: {{ vars.env }}\n
+                  volume: {{ vars.procedure_name }}{{ vars.env }}XX\n
+                  qtree: Q_{{ vars.procedure_name }}{{ vars.env }}XX\n
+                  vol_size: {{ vars.vol_size }}"
+        dest: "{{ input_cluster }}_extravars.yml"
+      delegate_to: localhost
+      when: procedure_name is defined

@@ -14,8 +14,8 @@
     - name: Set credentials details
       ansible.builtin.set_fact:
         auth: &auth
-          username:         "{{ input_username }}"
           hostname:         "{{ input_cluster }}"
+          username:         "{{ input_username }}"
           password:         "{{ input_password }}"
           validate_certs:   false
           use_rest:         Auto
