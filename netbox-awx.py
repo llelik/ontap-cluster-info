@@ -57,7 +57,7 @@ class CustomEventHandler(Script):
             # Retrieve job status
             job_status = 'running'
             while job_status == 'running':
-                job_response = requests.get(f'{awx_instance}:8043{job_url}', headers=headers)
+                job_response = requests.get(f'{awx_instance}:8043{job_url}', headers=headers, verify=False)
                 job_status = job_response.json()['status']
                 print("Job Status:", job_status)
                 if job_status == 'successful' or job_status == 'failed':
