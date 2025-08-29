@@ -1,4 +1,9 @@
 from extras.scripts import Script
+import requests
+import json
+import base64
+import time
+
 
 class CustomEventHandler(Script):
     class Meta:
@@ -9,6 +14,60 @@ class CustomEventHandler(Script):
         # Process the event data
         nas_name = data.get('name', {})
         nas_tenant = data.get('tenant', {})
+        
+        with open('./awx_config.json') as config_file:
+            config_data = json.load(config_file)
+            awx_username = config_data['awx_username']
+            awx_password = config_data['awx_password']
+            awx_instance = config_data['awx_instance']
+            input_username = config_data['input_username']
+            input_password = config_data['input_password']
+            input_cluster = config_data['input_cluster']
+
+        # Job template ID and extra vars
+        job_template_id = '8'
+        extra_vars = {
+            'nas_name': nas_name,
+            'nas_tenant': nas_tenant,
+            'input_username': input_username,
+            'input_password': input_password,
+            'input_cluster': input_cluster
+        }
+
+        # Encode username and password for Basic Authorization
+        auth_header = base64.b64encode(f'{awx_username}:{awx_password}'.encode()).decode('utf-8')
+        headers = {
+            'Authorization': f'Basic {auth_header}',
+            'Content-Type': 'application/json'
+        }
+
+        # Make the POST request to launch the job template with extra vars
+        launch_job_url = f'{awx_instance}/api/v2/job_templates/{job_template_id}/launch/'
+        launch_payload = {
+            'extra_vars': json.dumps(extra_vars)
+        }
+        response = requests.post(launch_job_url, headers=headers, json=launch_payload)
+
+        # Check the response
+        if response.status_code == 201:
+            print("Job launched successfully!")
+            job_url = response.json()['url']
+            print("Job URL:", job_url)
+
+            # Retrieve job status
+            job_status = 'running'
+            while job_status == 'running':
+                job_response = requests.get(job_url, headers=headers)
+                job_status = job_response.json()['status']
+                print("Job Status:", job_status)
+                if job_status == 'successful' or job_status == 'failed':
+                    break
+                time.sleep(10)  # Check job status every 10 seconds
+
+        else:
+            print("Failed to launch job. Status code:", response.status_code)
+            print("Response:", response.json())
+        
 
         # Extract relevant information from the event data
         
