@@ -17,5 +17,5 @@ class CustomEventHandler(Script):
         # Insert your code here to make the API request to AWX
 
         # Return a message indicating the script has run successfully
-        return f"Script executed successfully with key1: {key1}, key2: {key2}"
+        return f"Data: {data}"
 
