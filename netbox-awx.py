@@ -2,8 +2,8 @@ from extras.scripts import Script
 
 class CustomEventHandler(Script):
     class Meta:
-        name = "Custom Event Handler"
-        description = "Script to handle custom events in NetBox"
+        name = "Custom ONTAP NAS Event Handler"
+        description = "Script to handle custom ONTAP NAS events in NetBox"
 
     def run(self, data):
         # Process the event data
