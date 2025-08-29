@@ -46,7 +46,7 @@ class CustomEventHandler(Script):
         launch_payload = {
             'extra_vars': json.dumps(extra_vars)
         }
-        response = requests.post(launch_job_url, headers=headers, json=launch_payload)
+        response = requests.post(launch_job_url, headers=headers, json=launch_payload, verify=False)
 
         # Check the response
         if response.status_code == 201:
