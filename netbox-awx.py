@@ -77,4 +77,4 @@ class CustomEventHandler(Script):
         self.log_info('NAS Script executed!')
 
         # Return a message indicating the script has run successfully
-        return '\n'.join([f"NAS name: {nas_name}, Tenant: {nas_tenant}"])
+        return '\n'.join([f"NAS name: {nas_name}, Tenant: {nas_tenant}, AWX Job result: {job_status}"])
