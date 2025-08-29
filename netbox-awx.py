@@ -15,7 +15,7 @@ class CustomEventHandler(Script):
         nas_name = data.get('name', {})
         nas_tenant = data.get('tenant', {})
         
-        with open('./awx_config.json') as config_file:
+        with open('/opt/netbox/netbox/scripts/awx_config.json') as config_file:
             config_data = json.load(config_file)
             awx_username = config_data['awx_username']
             awx_password = config_data['awx_password']
