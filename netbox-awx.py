@@ -7,15 +7,14 @@ class CustomEventHandler(Script):
 
     def run(self, data, commit):
         # Process the event data
-        event_data = data.get('event', {})
-        
+        nas_name = data.get('name', {})
+        nas_tenant = data.get('tenant', {})
+
         # Extract relevant information from the event data
-        key1 = event_data.get('key1')
-        key2 = event_data.get('key2')
+        
 
         # Call AWX instance job template using the extracted data
         # Insert your code here to make the API request to AWX
 
         # Return a message indicating the script has run successfully
-        return f"Data: {data}"
-
+        return f"NAS name: {nas_name}, Tenant: {nas_tenant}"
