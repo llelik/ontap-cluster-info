@@ -15,6 +15,7 @@ class CustomEventHandler(Script):
 
         # Call AWX instance job template using the extracted data
         # Insert your code here to make the API request to AWX
+        log_info('NAS Script executed!')
 
         # Return a message indicating the script has run successfully
-        return f"NAS name: {nas_name}, Tenant: {nas_tenant}"
+        return '\n'.join([f"NAS name: {nas_name}, Tenant: {nas_tenant}"])
