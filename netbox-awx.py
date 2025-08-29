@@ -5,7 +5,7 @@ class CustomEventHandler(Script):
         name = "Custom ONTAP NAS Event Handler"
         description = "Script to handle custom ONTAP NAS events in NetBox"
 
-    def run(self, data):
+    def run(self, data, commit):
         # Process the event data
         event_data = data.get('event', {})
         
