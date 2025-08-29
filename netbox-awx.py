@@ -42,7 +42,7 @@ class CustomEventHandler(Script):
         }
 
         # Make the POST request to launch the job template with extra vars
-        launch_job_url = f'{awx_instance}/api/v2/job_templates/{job_template_id}/launch/'
+        launch_job_url = f'{awx_instance}:8043/api/v2/job_templates/{job_template_id}/launch/'
         launch_payload = {
             'extra_vars': json.dumps(extra_vars)
         }
