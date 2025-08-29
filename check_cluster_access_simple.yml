@@ -1,14 +1,6 @@
 - hosts: localhost
   connection: local
   gather_facts: no
-  vars_prompt:
-    - name: input_cluster
-      prompt: Please enter cluster hostname/IP
-      private: false
-    - name: input_username
-      prompt: Please enter username
-    - name: input_password
-      prompt: Please enter password
 
   tasks:
     - name: Set credentials details
