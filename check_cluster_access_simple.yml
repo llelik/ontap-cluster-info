@@ -10,7 +10,7 @@
           username:         "{{ input_username }}"
           password:         "{{ input_password }}"
           validate_certs:   false
-          use_rest:         Auto
+          use_rest:         Always
       no_log: true
 
     - name: Cluster debug
@@ -34,3 +34,4 @@
       register: cls_info
     - debug: var=cls_info
     - debug: var=ontap_debug
+    - debug: var=vars
