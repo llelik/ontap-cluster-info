@@ -27,11 +27,11 @@ class CustomEventHandler(Script):
         # Job template ID and extra vars
         job_template_id = '8'
         extra_vars = {
-            payload_data = {
-            'data': data,
-            'input_username': input_username,
-            'input_password': input_password,
-            'input_cluster': input_cluster
+            'payload_data': {
+                'data': data,
+                'input_username': input_username,
+                'input_password': input_password,
+                'input_cluster': input_cluster
             }
         }
 
