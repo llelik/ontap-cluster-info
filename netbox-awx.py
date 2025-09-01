@@ -27,12 +27,10 @@ class CustomEventHandler(Script):
         # Job template ID and extra vars
         job_template_id = '8'
         extra_vars = {
-            'payload_data': {
-                'data': data,
-                'input_username': input_username,
-                'input_password': input_password,
-                'input_cluster': input_cluster
-            }
+            'payload_data': data,
+            'input_username': input_username,
+            'input_password': input_password,
+            'input_cluster': input_cluster
         }
 
         # Encode username and password for Basic Authorization
@@ -79,4 +77,4 @@ class CustomEventHandler(Script):
 
         # Return a message indicating the script has run successfully
         #return '\n'.join([f"NAS name: {nas_name}, Tenant: {nas_tenant}, AWX Job result: {job_status}"])
-        return '\n'.join([f"AWX Job ID: {job_url}, AWX Job result: {job_status}"])
+        return '\n'.join([f"AWX Job ID: {job_url.split('/')[-2]}, AWX Job result: {job_status}"])
