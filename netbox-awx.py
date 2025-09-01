@@ -27,11 +27,13 @@ class CustomEventHandler(Script):
         # Job template ID and extra vars
         job_template_id = '8'
         extra_vars = {
+            payload_data = {
             'nas_name': nas_name,
             'nas_tenant': nas_tenant,
             'input_username': input_username,
             'input_password': input_password,
             'input_cluster': input_cluster
+            }
         }
 
         # Encode username and password for Basic Authorization
@@ -50,9 +52,9 @@ class CustomEventHandler(Script):
 
         # Check the response
         if response.status_code == 201:
-            print("Job launched successfully!")
+            print("AWX Job launched successfully!")
             job_url = response.json()['url']
-            print("Job URL:", job_url)
+            print("AWX Job URL:", job_url)
 
             # Retrieve job status
             job_status = 'running'
@@ -65,7 +67,7 @@ class CustomEventHandler(Script):
                 time.sleep(10)  # Check job status every 10 seconds
 
         else:
-            print("Failed to launch job. Status code:", response.status_code)
+            print("Failed to launch AWX job. Status code:", response.status_code)
             print("Response:", response.json())
         
 
@@ -74,7 +76,7 @@ class CustomEventHandler(Script):
 
         # Call AWX instance job template using the extracted data
         # Insert your code here to make the API request to AWX
-        self.log_info('NAS Script executed!')
+        self.log_info('NAS Script execution completed!')
 
         # Return a message indicating the script has run successfully
         return '\n'.join([f"NAS name: {nas_name}, Tenant: {nas_tenant}, AWX Job result: {job_status}"])

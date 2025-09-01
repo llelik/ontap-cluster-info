@@ -27,11 +27,12 @@
           fields: '*'
         gather_subset:
           - cluster
-          - aggregate_info
-          - cluster_node_info
-          - cluster/metrocluster/svms
-          - vserver_info
+          # - aggregate_info
+          # - cluster_node_info
+          # - cluster/metrocluster/svms
+          # - vserver_info
       register: cls_info
     - debug: var=cls_info
-    - debug: var=ontap_debug
-    - debug: var=vars
+    # - debug: var=ontap_debug
+    - debug: var=vars.payload_data
+      when: vars.payload_data is defined
