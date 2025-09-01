@@ -12,8 +12,8 @@ class CustomEventHandler(Script):
 
     def run(self, data, commit):
         # Process the event data
-        nas_name = data.get('name', {})
-        nas_tenant = data.get('tenant', {})
+        # nas_name = data.get('name', {})
+        # nas_tenant = data.get('tenant', {})
         
         with open('/opt/netbox/netbox/scripts/awx_config.json') as config_file:
             config_data = json.load(config_file)
@@ -28,8 +28,7 @@ class CustomEventHandler(Script):
         job_template_id = '8'
         extra_vars = {
             payload_data = {
-            'nas_name': nas_name,
-            'nas_tenant': nas_tenant,
+            'data': data,
             'input_username': input_username,
             'input_password': input_password,
             'input_cluster': input_cluster
