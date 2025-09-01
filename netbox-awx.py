@@ -14,7 +14,8 @@ class CustomEventHandler(Script):
         # Process the event data
         # nas_name = data.get('name', {})
         # nas_tenant = data.get('tenant', {})
-        
+        self.log_info(self.event)
+
         with open('/opt/netbox/netbox/scripts/awx_config.json') as config_file:
             config_data = json.load(config_file)
             awx_username = config_data['awx_username']
@@ -67,12 +68,7 @@ class CustomEventHandler(Script):
             print("Failed to launch AWX job. Status code:", response.status_code)
             print("Response:", response.json())
         
-
-        # Extract relevant information from the event data
         
-
-        # Call AWX instance job template using the extracted data
-        # Insert your code here to make the API request to AWX
         self.log_info('NAS Script execution completed!')
 
         # Return a message indicating the script has run successfully
