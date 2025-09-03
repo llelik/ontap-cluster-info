@@ -14,7 +14,6 @@ class CustomEventHandler(Script):
         # Process the event data
         # nas_name = data.get('name', {})
         # nas_tenant = data.get('tenant', {})
-        self.log_info(self.event)
 
         with open('/opt/netbox/netbox/scripts/awx_config.json') as config_file:
             config_data = json.load(config_file)
