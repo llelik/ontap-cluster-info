@@ -55,7 +55,7 @@ class CustomEventHandler(Script):
 
             # Retrieve job status
             job_status = 'running'
-            while job_status == 'running':
+            while job_status == 'running' or job_status == 'pending':
                 job_response = requests.get(f'{awx_instance}:8043{job_url}', headers=headers, verify=False)
                 job_status = job_response.json()['status']
                 print("Job Status:", job_status)
