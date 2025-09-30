@@ -13,6 +13,8 @@
           use_rest:         Always
       no_log: true
 
+    - debug: var=vars
+
     - name: Cluster debug
       netapp.ontap.na_ontap_debug:
         <<: *auth

@@ -1,0 +1,9 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - debug: var=vars
+    - command: 'ansible-galaxy collection list'
+      register: galaxy_netapp_ontap
+    - debug: var=galaxy_netapp_ontap.stdout_lines
