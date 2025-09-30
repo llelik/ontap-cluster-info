@@ -1,0 +1,10 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - name: Test Netbox conn
+      set_fact: 
+        nb_prefixes: "{{ query('netbox.netbox.nb_lookup', 'prefixes', api_endpoint=input_netbox_url, validate_certs=False, token=input_netbox_token) }}"
+      
+    - debug: var=nb_prefixes
