@@ -11,9 +11,8 @@
           password:         "{{ password }}"
           validate_certs:   false
           use_rest:         Always
+          https:            true
       no_log: true
-
-    - debug: var=vars
 
     - name: Cluster debug
       netapp.ontap.na_ontap_debug:
