@@ -1,0 +1,7 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+
+  tasks:
+    - debug: var=vars.payload_data
+      when: vars.payload_data is defined
